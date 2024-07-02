@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>登录页面</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .login-form {
+            width: 300px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .login-form input[type="number"],
+        .login-form input[type="password"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+
+        .login-form button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 3px;
+        }
+
+        .login-form button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+
+<body>
+<div class="login-form">
+    <img src="/picture1.jpg" alt="无法显示" class="login-illustration">
+    <h1>用户登录</h1>
+    用户id：<input name="id" type="number" id="id"><br>
+    密码：<input name="password" type="password" id="password"><br>
+    <button type="button" value="登录" onclick="login()">登录</button>
+</div>
+
+<style>        /* ... 原有的样式 ... */
+
+/* 添加以下样式来调整图片位置和大小 */
+.login-illustration {
+    position: absolute;
+    top: 100px; /* 根据需要调整 */
+    right: 1300px; /* 根据需要调整 */
+    width: 400px; /* 图片宽度，请根据实际情况调整 */
+    height: auto; /* 保持图片宽高比 */
+    opacity: 1; /* 可选：降低图片透明度，让其不那么抢眼 */
+    z-index: 1; /* 确保图片在表单后面 */
+}
+</style>
+
+<script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+<script>
+    function login() {
+        const id = $("#id").val();
+        const password = $("#password").val();
+
+        if(id.trim() !== '' && password.trim() !== '') { // 检查是否有输入
+            console.log("登录");
+            $.ajax({
+                url: "/user/getlogin",
+                type: "post",
+                data: {
+                    "id": id,
+                    "password": password
+                },
+                success: function(result) {
+                    console.log("Redirecting to /index.html");
+                    window.location.href = "/user/index";
+                },
+                error: function(xhr, status, error) {
+                    alert("请检查id和密码是否正确。");
+                    console.error(error);
+                }
+            });
+        } else {
+            alert("请输入用户id和密码。");
+        }
+    }
+</script>
+</body>
+
+</html>
